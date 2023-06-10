@@ -2,238 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D-Alphabets</title>
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/hero.css">
+    <link rel="stylesheet" href="css/section.css">
+    <title>Document</title>
 </head>
-<style>
-	*
-{
-    margin: 0;
-    padding: 0;
-}
-
-html,
-body
-{
-    overflow: hidden;
-}
-
-.webgl
-{
-    position: fixed;
-    top: 0;
-    left: 0;
-    outline: none;
-}
-</style>
 <body>
-    <canvas class="webgl"></canvas>
+    <div class="hero">
+        <img src="assets/images/Bachhe.png" alt="">
+        <div>
+            <h1 class="acc2">SPARK LEARNING</h1>
+            <p>Project Spark is an innovative educational program that empowers children with special needs to unlock their full potential. Through a range of engaging and interactive activities, children are encouraged to study which they often find boring in special schools.</p>
+            <a class="btn" href="">Learn More</a>
+        </div>
+    </div>
+    <section class="bgacc">
+        <h1 class="acc1">The Problem</h1>
+        <p>
+            <ul class="acc1">
+                <li>Limited educational resources tailored to the needs of children with Down syndrome Social isolation and lack of opportunities to connect with peers.</li>
+                <li>Low self-esteem and self-confidence due to perceived limitations and societal stigma.</li>
+                <li>Difficulty in accessing individualized support and guidance in academic and personal development.</li>
+                <li>Limited exposure to activities that foster creativity, critical thinking, and problem-solving skills.</li>
+                <li>Lack of access to technology and adaptive devices that can facilitate.</li>
+            </ul>
+        </p>
+    </section>
+    <section class="">
+        <h1 class="acc2">Section Title</h1>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci molestias, alias, est cupiditate, sunt quaerat perspiciatis eaque laudantium perferendis quis nobis praesentium harum labore possimus veritatis hic aut nihil nisi.lorem lorem100
+        </p>
+        <div class="cards-container">
+            <div class="card acc2">
+                <h2>Card Title</h2>
+            </div>
+            <div class="card acc2">
+                <h2>Links maybe?</h2>
+            </div>
+        </div>
+    </section>
+    <section class="">
+        <h1 class="acc1">Our Features</h1>
+        <div class="cards-container">
+            <a href="3DText.html" class="card acc1">
+                <h2>3D Text</h2>
+            </a>
+            <a href="Detection.html" class="card acc1">
+                <h2>ABCD</h2>
+            </a>
+        </div>
+    </section>
 </body>
-<script type="module">
-import * as THREE from 'https://cdn.skypack.dev/three@0.132.2'
-import { OrbitControls } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm/controls/OrbitControls.js';
-
-
-/**
- * Base
- */
-// Debug
-
-// Canvas
-const canvas = document.querySelector('canvas.webgl')
-
-// Scene
-const scene = new THREE.Scene()
-
-/**
- * Fonts
- */
-const fontLoader = new THREE.FontLoader()
-
-fontLoader.load(
-    'https://cdn.skypack.dev/three@0.132.2/examples/fonts/helvetiker_bold.typeface.json',
-    (font) =>
-    {
-        fontLoader.load(
-            'https://cdn.skypack.dev/three@0.132.2/examples/fonts/helvetiker_bold.typeface.json',
-            (font) =>
-            {
-                // Material
-                const material = new THREE.MeshNormalMaterial()
-
-                let firstLetter = true;
-                let text = "HELLO";
-                let textMesh1;
-                refreshText();
-                document.addEventListener( 'keypress', onDocumentKeyPress );
-				document.addEventListener( 'keydown', onDocumentKeyDown );
-                
-                function onDocumentKeyDown( event ) {
-
-                    if ( firstLetter ) {
-    
-                        firstLetter = false;
-                        text = '';
-    
-                    }
-    
-                    const keyCode = event.keyCode;
-    
-                    // backspace
-    
-                    if ( keyCode == 8 ) {
-    
-                        event.preventDefault();
-    
-                        text = text.substring( 0, text.length - 1 );
-                        refreshText();
-    
-                        return false;
-    
-                    }
-    
-                }
-    
-                function onDocumentKeyPress( event ) {
-    
-                    const keyCode = event.which;
-    
-                    // backspace
-    
-                    if ( keyCode == 8 ) {
-    
-                        event.preventDefault();
-    
-                    } else {
-    
-                        const ch = String.fromCharCode( keyCode );
-                        text += ch;
-    
-                        refreshText();
-    
-                    }
-    
-                }
-
-                // Text
-                function createText(){
-                const textGeometry = new THREE.TextBufferGeometry(
-                    text,
-                    {
-                        font: font,
-                        size: 0.5,
-                        height: 0.2,
-                        curveSegments: 12,
-                        bevelEnabled: true,
-                        bevelThickness: 0.03,
-                        bevelSize: 0.02,
-                        bevelOffset: 0,
-                        bevelSegments: 5
-                    }
-                )
-                textGeometry.center()
-
-                textMesh1 = new THREE.Mesh(textGeometry, material)
-                scene.add(textMesh1)
-                }
-
-                function refreshText() {
-
-                    scene.remove( textMesh1 );              
-                      
-                    function speak(text, rate, pitch, volume) {
-                    // create a SpeechSynthesisUtterance to configure the how text to be spoken 
-                    let speakData = new SpeechSynthesisUtterance();
-                    speakData.volume = volume; // From 0 to 1
-                    speakData.rate = rate; // From 0.1 to 10
-                    speakData.pitch = pitch; // From 0 to 2
-                    speakData.text = text;
-                    speakData.lang = 'en';
-                    
-                    // pass the SpeechSynthesisUtterance to speechSynthesis.speak to start speaking 
-                    speechSynthesis.speak(speakData);
-                    
-                    }
-                    
-                    if ('speechSynthesis' in window) {
-                    let rate = 1, pitch = 2, volume = 1;
-                    setTimeout(()=>{ // speak after 1 seconds 
-                        speak(text, rate, pitch, volume );
-                    }, 1000);
-                    }else{
-                    console.log(' Speech Synthesis Not Supported'); 
-                    }
-
-                if ( ! text ) return;
-    
-                    createText();
-    
-                }
-            }
-        )
-    }
-)
-
-/**
- * Sizes
- */
-const sizes = {
-    width: window.innerWidth,
-    height: window.innerHeight
-}
-
-window.addEventListener('resize', () =>
-{
-    // Update sizes
-    sizes.width = window.innerWidth
-    sizes.height = window.innerHeight
-
-    // Update camera
-    camera.aspect = sizes.width / sizes.height
-    camera.updateProjectionMatrix()
-
-    // Update renderer
-    renderer.setSize(sizes.width, sizes.height)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-})
-
-/**
- * Camera
- */
-// Base camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.x = 0
-camera.position.y = 0
-camera.position.z = 3
-scene.add(camera)
-
-// Controls
-const controls = new OrbitControls(camera, canvas)
-controls.enableDamping = true
-
-/**
- * Renderer
- */
-const renderer = new THREE.WebGLRenderer({
-    canvas: canvas
-})
-renderer.setSize(sizes.width, sizes.height)
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-
-
-const tick = () =>
-{
-
-    // Update controls
-    controls.update()
-
-    // Render
-    renderer.render(scene, camera)
-
-    // Call tick again on the next frame
-    window.requestAnimationFrame(tick)
-}
-
-tick()
-</script>
 </html>
